@@ -12,6 +12,7 @@ interface Data {
 interface UserProviderData {
   logout: () => void;
   login: (data: Data) => void;
+  signIn: (data: Data) => void;
 }
 interface UserProps {
   children: ReactNode;
@@ -32,7 +33,7 @@ export const UserProvider = ({ children }: UserProps) => {
     api
       .post("/api/login", data)
       .then((response) => {
-        const token = response.data.accessToken;
+        const token = response.data.token;
         localStorage.setItem("@challenge:token", token);
         setAuthToken(response.data.accessToken);
         toast.success("Login efetuado com sucesso");
@@ -46,8 +47,21 @@ export const UserProvider = ({ children }: UserProps) => {
     toast.success("Você saiu :`(");
   };
 
+  const signIn = (data: Data) => {
+    api
+      .post("/api/user", data)
+      .then((response) => {
+        const user = response.data.username;
+        console.log(user);
+        localStorage.setItem("@challenge:username", user);
+        toast.success("Cadastro realizado com sucesso");
+        history.push("/");
+      })
+      .catch((error) => toast.error("Nome de usuário ou senha inválidos"));
+  };
+
   return (
-    <UserContext.Provider value={{ login, logout }}>
+    <UserContext.Provider value={{ login, logout, signIn }}>
       {children}
     </UserContext.Provider>
   );

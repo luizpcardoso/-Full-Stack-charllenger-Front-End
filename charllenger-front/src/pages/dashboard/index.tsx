@@ -1,12 +1,17 @@
 import { Container } from "./style";
 import { TransactionCard } from "../../components/transactionCard";
+import { BiLogOut } from 'react-icons/bi';
+import { MdAttachMoney } from 'react-icons/md';
 import userPerfil from "../../assets/images/image 1.svg"
+import { ModalPay } from "../../components/modalPay";
+
 export const Dashboard = () => {
 
 
 
     return (
         <Container>
+            <ModalPay />
             <section className="user_infos">
 
                 <img src={userPerfil}></img>
@@ -33,12 +38,13 @@ export const Dashboard = () => {
                 </ul>
             </section>
             <section className="pay_options">
-                <button>Pagar</button>
+                <button><BiLogOut /></button>
+                <button><MdAttachMoney /></button>
             </section>
 
 
 
 
-        </Container>
+        </Container >
     )
 }

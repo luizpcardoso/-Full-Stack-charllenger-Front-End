@@ -36,6 +36,7 @@ export const Container = styled.div`
     background-color:#D9D9D9;
     height:50% ;
     width: 90%;
+    max-width: 800px;
     border-radius: 15px;
   }
 
@@ -76,8 +77,10 @@ export const Container = styled.div`
   .pay_options{
     display: flex;
     height: 15%;
+    width: 100%;
+    max-width: 800px;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
   }
 
   .pay_options button {
@@ -88,6 +91,26 @@ export const Container = styled.div`
     color: #1A1A1A;
     font-family: 'Poppins', sans-serif;
     font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+
+  }
+  .pay_options button svg{
+    width: 2.5em;
+    height: 2.5em;
+    
+  }
+
+  @media (min-width: 600px) {
+
+
+
+
+
+
+
 
   }
 

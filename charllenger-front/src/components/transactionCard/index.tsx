@@ -1,18 +1,20 @@
 import { Container } from "./style";
 
-export const TransactionCard = () => {
-
-
-
-    return (
-        <Container>
-            <div>
-                <p>@João</p>
-                <p className="date">11/12/2022</p>
-            </div>
-            <div>
-                <p>R$200,00</p>
-            </div>
-        </Container>
-    )
+interface TrasactionCard {
+  date: Date;
+  value: number;
+  type: string;
 }
+
+export const TransactionCard = ({ date, value, type }: TrasactionCard) => {
+  return (
+    <Container>
+      <p>{type == "cashOut" ? "Saída" : "Entrada"}</p>
+      <p className="date">{`${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`}</p>
+
+      <p className={type == "cashOut" ? "saida" : "entrada"}>
+        {type == "cashIn" ? `R$${value.toFixed(2)}` : `-R$${value.toFixed(2)}`}
+      </p>
+    </Container>
+  );
+};

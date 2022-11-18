@@ -1,12 +1,17 @@
 import { ReactNode } from "react";
 import { UserProvider } from "./user";
+import { TransactionsProvider } from "./trasactions";
 
 interface ProvidersProps {
   children: ReactNode;
 }
 
 const Providers = ({ children }: ProvidersProps) => {
-  return <UserProvider>{children}</UserProvider>;
+  return (
+    <TransactionsProvider>
+      <UserProvider>{children}</UserProvider>;
+    </TransactionsProvider>
+  );
 };
 
 export default Providers;

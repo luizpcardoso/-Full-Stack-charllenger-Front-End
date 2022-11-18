@@ -7,6 +7,18 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
+  animation-name: opacityin;
+  animation-duration: 0.3s;
+
+  @keyframes opacityin {
+    from {
+      opacity: 50%;
+    }
+
+    to {
+      opacity: 100%;
+    }
+  }
 
   .user_infos {
     display: flex;
@@ -51,10 +63,16 @@ export const Container = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: #d9d9d9;
   }
   .pay_options button svg {
     width: 2.5em;
     height: 2.5em;
+  }
+  .pay_options button:hover {
+    cursor: pointer;
+    background-color: #d9d9d950;
+    transition: 0.3s;
   }
 
   @media (min-width: 600px) {

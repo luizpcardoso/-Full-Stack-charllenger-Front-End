@@ -52,6 +52,7 @@ export const ModalPay = ({ handdleOpen, setHandleOpenModal }: any) => {
           <span>{errors.value ? errors.value.message : ""}</span>
           <div className="buttons_form">
             <button
+              className="button_cancel"
               type="button"
               onClick={(e) => {
                 reset();
@@ -60,7 +61,7 @@ export const ModalPay = ({ handdleOpen, setHandleOpenModal }: any) => {
             >
               <GiCancel />
             </button>
-            <button>
+            <button className="button_send">
               <MdAttachMoney />
             </button>
           </div>

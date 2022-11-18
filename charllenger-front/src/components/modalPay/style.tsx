@@ -12,12 +12,26 @@ export const Container = styled.div`
   justify-content: center;
   display: none;
 
+  @keyframes slidein {
+    from {
+      margin-bottom: 100%;
+      width: 300%;
+    }
+
+    to {
+      margin-bottom: 0%;
+      width: 100%;
+    }
+  }
+
   section {
     width: 80%;
     height: 35vh;
     background-color: #d9d9d9;
     border-radius: 15px;
     max-width: 350px;
+    animation-name: slidein;
+    animation-duration: 0.5s;
   }
   h2 {
     margin: 10px auto;
@@ -72,5 +86,15 @@ export const Container = styled.div`
   button svg {
     width: 2.5em;
     height: 2.5em;
+  }
+  .button_cancel:hover {
+    background-color: #771212b0;
+    transition: 0.3s;
+    cursor: pointer;
+  }
+  .button_send:hover {
+    background-color: #d3c121ae;
+    transition: 0.3s;
+    cursor: pointer;
   }
 `;

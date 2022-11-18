@@ -87,6 +87,9 @@ export const UserProvider = ({ children }: UserProps) => {
     api
       .post("/api/user", data)
       .then((response) => {
+        if (response.data.error) {
+          throw new Error();
+        }
         toast.success("Cadastro realizado com sucesso");
         history.push("/");
       })

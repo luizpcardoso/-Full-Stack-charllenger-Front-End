@@ -9,6 +9,29 @@ export const Container = styled.div`
   justify-content: center;
   font-family: "Poppins", sans-serif;
 
+  @keyframes slideLeftIn {
+    from {
+      margin-left: 30%;
+      opacity: 10%;
+    }
+
+    to {
+      margin-left: 0%;
+      opacity: 100%;
+    }
+  }
+  @keyframes slideRightIn {
+    from {
+      margin-right: 30%;
+      opacity: 10%;
+    }
+
+    to {
+      margin-right: 0%;
+      opacity: 100%;
+    }
+  }
+
   section {
   }
   .div_details {
@@ -31,6 +54,8 @@ export const Container = styled.div`
     justify-content: center;
     position: absolute;
     top: 10vh;
+    animation-name: slideLeftIn;
+    animation-duration: 0.3s;
   }
 
   .div_login form h2 {
@@ -73,7 +98,11 @@ export const Container = styled.div`
     font-family: "Poppins", sans-serif;
     font-weight: bold;
   }
-
+  .div_login_buttons button:hover {
+    cursor: pointer;
+    background-color: #d9d9d950;
+    transition: 0.3s;
+  }
   @media (min-width: 600px) {
     section {
       height: 80%;
@@ -89,6 +118,13 @@ export const Container = styled.div`
       display: flex;
       width: 50%;
       height: 100%;
+      align-items: center;
+      justify-content: center;
+    }
+    .div_details img {
+      height: 50%;
+      animation-name: slideRightIn;
+      animation-duration: 0.3s;
     }
     .div_login {
       width: 50%;

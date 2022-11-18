@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useHistory } from "react-router-dom";
+import ImageLogin from "../../assets/images/csachwallpaper.svg";
 
 import { useState } from "react";
 
@@ -37,7 +38,9 @@ export const Login = () => {
     <>
       <Container>
         <section>
-          <div className="div_details"></div>
+          <div className="div_details">
+            <img src={ImageLogin}></img>
+          </div>
           <div className="div_login">
             <form onSubmit={handleSubmit(onSubmit)}>
               <h2>Login</h2>

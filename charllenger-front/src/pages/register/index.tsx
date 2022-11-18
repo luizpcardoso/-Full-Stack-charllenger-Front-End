@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useHistory } from "react-router-dom";
+import ImageRegister from "../../assets/images/register.svg";
 
 interface Data {
   username: string;
@@ -35,7 +36,9 @@ export const Register = () => {
     <>
       <Container>
         <section>
-          <div className="div_details"></div>
+          <div className="div_details">
+            <img src={ImageRegister}></img>
+          </div>
           <div className="div_login">
             <form onSubmit={handleSubmit(onSubmit)}>
               <h2>Cadastro</h2>

@@ -7,6 +7,9 @@ import { ModalPay } from "../../components/modalPay";
 import { useUser } from "../../providers/user";
 import { useTransactions } from "../../providers/trasactions";
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
+import { TransactionsList } from "../../components/ListTransactions";
 
 interface ITransiction {
   createdAt: string;
@@ -16,78 +19,54 @@ interface ITransiction {
 }
 
 export const Dashboard = () => {
+  const history = useHistory();
   const username = localStorage.getItem("@challenge:username") || "";
-  const { balance } = useUser();
+  const { balance, logout, getBalance } = useUser();
   const [typeFilter, setTypeFilter] = useState("all");
-  const { transactions, renewTransaction, filterTransactionByType } =
-    useTransactions();
+  const [dateFilter, setDAteFilter] = useState("");
+  const [handleOpenModal, setHandleOpenModal] = useState(false);
+  const { transactions, renewTransaction, transactionSend } = useTransactions();
+
+  const token = localStorage.getItem("@challenge:token");
+  if (!token) {
+    toast.error("Faça login para acessar esta página");
+    history.push("/");
+  }
 
   useEffect(() => {
     renewTransaction();
-  }, [balance]);
+    getBalance();
+  }, [handleOpenModal]);
 
   return (
     <Container>
-      <ModalPay />
+      <ModalPay
+        handdleOpen={handleOpenModal}
+        setHandleOpenModal={setHandleOpenModal}
+      />
       <section className="user_infos">
         <img src={userPerfil}></img>
 
         <p>@{username}</p>
-        <p>R${balance}</p>
+        <p>R${Number(balance).toFixed(2)}</p>
       </section>
-      <section className="transactions_list">
-        <div className="transaction_filter">
-          <button
-            className="transaction_filter_in"
-            onClick={() => {
-              typeFilter == "cashIn"
-                ? setTypeFilter("all")
-                : setTypeFilter("cashIn");
-            }}
-          >
-            Entradas
-          </button>
-          <button
-            className="transaction_filter_out"
-            onClick={() => {
-              typeFilter == "cashOut"
-                ? setTypeFilter("all")
-                : setTypeFilter("cashOut");
-            }}
-          >
-            Saídas
-          </button>
-        </div>
-        <ul>
-          {transactions
-            ?.filter(
-              (tr: ITransiction) =>
-                tr.type === typeFilter || typeFilter == "all"
-            )
-            .map(
-              (transaction: {
-                createdAt: string;
-                transaction_id: string;
-                value: number;
-                type: string;
-              }) => {
-                return (
-                  <TransactionCard
-                    date={new Date(transaction.createdAt) as Date}
-                    value={transaction.value as number}
-                    type={transaction.type as string}
-                    key={transaction.transaction_id}
-                  ></TransactionCard>
-                );
-              }
-            )}
-        </ul>
-      </section>
+
+      <TransactionsList />
       <section className="pay_options">
-        <button>
+        <button
+          onClick={() => {
+            logout();
+          }}
+        >
           <BiLogOut />
         </button>
-        <button>
+        <button
+          onClick={(event) => {
+            event.preventDefault();
+
+            setHandleOpenModal(true);
+          }}
+        >
           <MdAttachMoney />
         </button>
       </section>

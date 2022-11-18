@@ -9,7 +9,7 @@ interface ProvidersProps {
 const Providers = ({ children }: ProvidersProps) => {
   return (
     <TransactionsProvider>
-      <UserProvider>{children}</UserProvider>;
+      <UserProvider>{children}</UserProvider>
     </TransactionsProvider>
   );
 };

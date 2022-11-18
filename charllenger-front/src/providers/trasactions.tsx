@@ -13,13 +13,20 @@ import { useHistory } from "react-router-dom";
 interface TransactionsProviderData {
   transactions: [];
   renewTransaction: () => void;
-  filterTransactionByType: (type: string) => void;
+  transactionSend: (data: DataTransaction) => void;
 }
 interface TransactionProps {
   children: ReactNode;
 }
 interface ITransaction {
   type: string;
+}
+interface DataTransaction {
+  username: string;
+  value: string;
+}
+interface Itransactions {
+  createdAt: Date;
 }
 
 export const TransactionContext = createContext<TransactionsProviderData>(
@@ -33,39 +40,54 @@ export const TransactionsProvider = ({ children }: TransactionProps) => {
 
   const [transactions, setTransactions] = useState<[]>([]);
 
-  const [filterbytype, setFilterByType] = useState("all");
-
-  const renewTransaction = async () => {
-    await api
+  const renewTransaction = () => {
+    const token = localStorage.getItem("@challenge:token");
+    api
       .get("/api/transactions", {
         headers: {
-          Authorization: `Bearer ${authToken}`,
+          Authorization: `Bearer ${token}`,
         },
       })
-      .then(async (response) => {
+      .then((response) => {
         const cashIn = response.data.cashIn.map((e: { type: string }) => {
           return { ...e, type: "cashIn" };
         });
+
         const cashOut = response.data.cashOut.map((e: { type: string }) => {
           return { ...e, type: "cashOut" };
         });
-        await setTransactions([...cashOut, ...cashIn] as []);
+
+        const allTransactions: any = [...cashIn, ...cashOut].sort(
+          (a: any, b: any) => {
+            let c = new Date(b.createdAt) as Date;
+            let d = new Date(a.createdAt) as Date;
+
+            return c.getTime() - d.getTime();
+          }
+        );
+
+        setTransactions([...allTransactions] as []);
       })
-      .catch((error) => toast.error("Problema na busca"));
+      .catch((error) => console.log("Problema na busca"));
   };
 
-  const filterTransactionByType = async (type: string) => {
-    await renewTransaction();
-    const newTransactions = transactions.filter(
-      (tr: ITransaction) => tr.type === type
-    );
-
-    setTransactions(newTransactions as []);
+  const transactionSend = (data: DataTransaction) => {
+    const token = localStorage.getItem("@challenge:token");
+    api
+      .post("/api/pay", data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        toast.success("Quantia enviada com sucesso!");
+      })
+      .catch((error) => toast.error("Erro no pagamento"));
   };
 
   return (
     <TransactionContext.Provider
-      value={{ transactions, renewTransaction, filterTransactionByType }}
+      value={{ transactions, renewTransaction, transactionSend }}
     >
       {children}
     </TransactionContext.Provider>

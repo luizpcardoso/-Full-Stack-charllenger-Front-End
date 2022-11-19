@@ -80,8 +80,11 @@ export const TransactionsProvider = ({ children }: TransactionProps) => {
         },
       })
       .then((response) => {
+        if (response.data.error) {
+          throw new Error();
+        }
         toast.success("Quantia enviada com sucesso!");
-        renewTransaction()
+        renewTransaction();
       })
       .catch((error) => toast.error("Erro no pagamento"));
   };

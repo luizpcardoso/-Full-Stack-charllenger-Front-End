@@ -6,8 +6,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useHistory } from "react-router-dom";
 import ImageLogin from "../../assets/images/csachwallpaper.svg";
 
-import { useState } from "react";
-
 interface Data {
   username: string;
   password: string;
@@ -62,6 +60,7 @@ export const Login = () => {
               </span>
               <div className="div_login_buttons">
                 <button
+                type="button"
                   onClick={() => {
                     history.push("/register");
                   }}

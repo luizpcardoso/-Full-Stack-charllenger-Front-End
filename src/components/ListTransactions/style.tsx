@@ -65,6 +65,20 @@ export const Container = styled.div`
     cursor: pointer;
   }
 
+  ul::-webkit-scrollbar {
+  width: 6px;               /* width of the entire scrollbar */
+}
+
+ul::-webkit-scrollbar-track {
+  background: #ffffff00;        /* color of the tracking area */
+}
+
+ul::-webkit-scrollbar-thumb {
+  background-color: #21212c;    /* color of the scroll thumb */
+  border-radius: 20px;       /* roundness of the scroll thumb */
+  border: 1px solid #ffffff;  /* creates padding around scroll thumb */
+}
+
   @media (min-width: 600px) {
   }
 `;

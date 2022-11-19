@@ -5,6 +5,9 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTransactions } from "../../providers/trasactions";
+import { useUser } from "../../providers/user";
+import { Console } from "console";
+import { useState } from "react";
 
 interface Data {
   username: string;
@@ -13,6 +16,7 @@ interface Data {
 
 export const ModalPay = ({ handdleOpen, setHandleOpenModal }: any) => {
   const { transactionSend, renewTransaction } = useTransactions();
+  const { getBalance } = useUser();
 
   const formSchema = yup.object().shape({
     username: yup.string().required("usuário obrigatório"),
@@ -31,11 +35,11 @@ export const ModalPay = ({ handdleOpen, setHandleOpenModal }: any) => {
     resolver: yupResolver(formSchema),
   });
 
-  const onSubmit = (data: Data) => {
+  const onSubmit = async (data: Data) => {
     console.log(data);
-    transactionSend(data);
-    renewTransaction();
+    await transactionSend(data);
     reset();
+    getBalance();
     setHandleOpenModal(false);
   };
 

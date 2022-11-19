@@ -1,13 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Container } from "./style";
 import { useTransactions } from "../../providers/trasactions";
 import { TransactionCard } from "../../components/transactionCard";
 
 export const TransactionsList = () => {
+  const { transactions, renewTransaction } = useTransactions();
   const [typeFilter, setTypeFilter] = useState("all");
   const [dateFilter, setDAteFilter] = useState("");
 
-  const { transactions, renewTransaction, transactionSend } = useTransactions();
+  
+
+
+console.log(transactions)
 
   interface ITransiction {
     createdAt: string;
@@ -48,7 +52,9 @@ export const TransactionsList = () => {
         ></input>
       </div>
       <ul>
-        {transactions
+        {
+                   
+          transactions
           ?.filter((tr: ITransiction) => {
             const dateCreated = new Date(tr.createdAt);
             const newDateFilter = new Date(dateFilter);
@@ -59,12 +65,7 @@ export const TransactionsList = () => {
             );
           })
           .map(
-            (transaction: {
-              createdAt: string;
-              transaction_id: string;
-              value: number;
-              type: string;
-            }) => {
+            (transaction: ITransiction) => {
               return (
                 <TransactionCard
                   date={new Date(transaction.createdAt) as Date}
@@ -75,6 +76,7 @@ export const TransactionsList = () => {
               );
             }
           )}
+          
       </ul>
     </Container>
   );

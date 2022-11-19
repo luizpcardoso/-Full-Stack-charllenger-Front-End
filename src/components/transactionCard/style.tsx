@@ -13,6 +13,13 @@ export const Container = styled.li`
   justify-content: space-around;
   padding: 0 5px 0 5px;
 
+  p {
+    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .saida {
     color: #7b1010;
   }
